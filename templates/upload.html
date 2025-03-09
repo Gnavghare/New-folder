@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+
+{% block title %}Upload Image for Body Analysis{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="card-title mb-0">Upload Image for Body Analysis</h3>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-info">
+                        <h5><i class="fas fa-info-circle me-2"></i>How it works:</h5>
+                        <p>Upload a full-body image for our AI to analyze your body type, posture, symmetry, and proportions. We'll use this analysis to create a personalized fitness and nutrition plan.</p>
+                    </div>
+                    
+                    <form method="POST" enctype="multipart/form-data" class="mt-4">
+                        <div class="mb-4">
+                            <label for="file" class="form-label fw-bold">Upload a full-body image:</label>
+                            <input type="file" class="form-control" id="file" name="file" accept=".jpg,.jpeg,.png" required>
+                            <div class="form-text">Supported formats: JPG, JPEG, PNG (max 16MB)</div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <h5>For best results:</h5>
+                            <ul class="list-group">
+                                <li class="list-group-item">
+                                    <i class="fas fa-check-circle text-success me-2"></i> Stand straight with arms slightly away from your body
+                                </li>
+                                <li class="list-group-item">
+                                    <i class="fas fa-check-circle text-success me-2"></i> Wear form-fitting clothing to allow accurate analysis
+                                </li>
+                                <li class="list-group-item">
+                                    <i class="fas fa-check-circle text-success me-2"></i> Ensure good lighting and a plain background
+                                </li>
+                                <li class="list-group-item">
+                                    <i class="fas fa-check-circle text-success me-2"></i> Make sure your full body is visible in the frame
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <div class="card h-100">
+                                    <div class="card-header bg-light">
+                                        <h5 class="mb-0">What we'll analyze:</h5>
+                                    </div>
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item">Body type and proportions</li>
+                                        <li class="list-group-item">Posture quality and alignment</li>
+                                        <li class="list-group-item">Body symmetry and balance</li>
+                                        <li class="list-group-item">Estimated body fat percentage</li>
+                                        <li class="list-group-item">BMI category</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card h-100">
+                                    <div class="card-header bg-light">
+                                        <h5 class="mb-0">What you'll receive:</h5>
+                                    </div>
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item">Detailed body analysis report</li>
+                                        <li class="list-group-item">Personalized exercise recommendations</li>
+                                        <li class="list-group-item">Posture correction exercises</li>
+                                        <li class="list-group-item">Customized nutrition plan</li>
+                                        <li class="list-group-item">Weekly workout schedule</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="fas fa-upload me-2"></i>Upload and Analyze
+                            </button>
+                            <a href="{{ url_for('profile') }}" class="btn btn-outline-secondary">
+                                <i class="fas fa-arrow-left me-2"></i>Back to Profile
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="card mt-4 shadow">
+                <div class="card-header bg-info text-white">
+                    <h4 class="mb-0">Privacy Information</h4>
+                </div>
+                <div class="card-body">
+                    <p>Your privacy is important to us. Here's how we handle your data:</p>
+                    <ul>
+                        <li>Images are processed securely on our servers</li>
+                        <li>We don't store your images permanently</li>
+                        <li>Analysis results are only stored for the duration of your session</li>
+                        <li>We don't share your data with third parties</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

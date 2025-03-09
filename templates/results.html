@@ -1,0 +1,296 @@
+{% extends "base.html" %}
+
+{% block title %}Fitness Analysis Results{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="text-center mb-4">Your Fitness Analysis Results</h1>
+    
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="card-title">Body Analysis</h3>
+                </div>
+                <div class="card-body">
+                    {% if body_analysis and body_analysis.success %}
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h4>Body Measurements</h4>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">Body Type: <strong>{{ body_analysis.body_measurements.body_type }}</strong></li>
+                                    <li class="list-group-item">BMI Category: <strong>{{ body_analysis.body_measurements.bmi_category }}</strong></li>
+                                    <li class="list-group-item">Body Fat: <strong>{{ "%.1f"|format(body_analysis.body_measurements.body_fat_percentage) }}%</strong></li>
+                                    <li class="list-group-item">Shoulder/Hip Ratio: <strong>{{ "%.2f"|format(body_analysis.body_measurements.shoulder_hip_ratio) }}</strong></li>
+                                    <li class="list-group-item">Posture Quality: <strong>{{ body_analysis.body_measurements.posture_quality }}</strong></li>
+                                    <li class="list-group-item">Symmetry Score: <strong>{{ "%.1f"|format(body_analysis.body_measurements.symmetry_score) }}/100</strong></li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                {% if body_image_path %}
+                                    <img src="{{ body_image_path }}" class="img-fluid rounded" alt="Body Analysis">
+                                {% else %}
+                                    <div class="alert alert-warning">No body analysis image available</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        
+                        <div class="mt-4">
+                            <h4>Posture Analysis</h4>
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <h5 class="card-title">Posture Quality: {{ body_analysis.body_measurements.posture_quality }}</h5>
+                                    <p class="card-text">Focus: {{ body_analysis.posture_recommendations.focus }}</p>
+                                    <p class="card-text">Recommended Frequency: {{ body_analysis.posture_recommendations.frequency }}</p>
+                                    <h6>Recommended Exercises:</h6>
+                                    <ul>
+                                        {% for exercise in body_analysis.posture_recommendations.exercises %}
+                                            <li>{{ exercise }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-4">
+                            <h4>Symmetry Analysis</h4>
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <h5 class="card-title">Symmetry Score: {{ "%.1f"|format(body_analysis.body_measurements.symmetry_score) }}/100</h5>
+                                    <p class="card-text">Category: {{ body_analysis.symmetry_category }}</p>
+                                    <p class="card-text">Focus: {{ body_analysis.symmetry_recommendations.focus }}</p>
+                                    <h6>Recommended Exercises:</h6>
+                                    <ul>
+                                        {% for exercise in body_analysis.symmetry_recommendations.exercises %}
+                                            <li>{{ exercise }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                    <p class="card-text"><small class="text-muted">{{ body_analysis.symmetry_recommendations.notes }}</small></p>
+                                </div>
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="alert alert-warning">No body analysis data available</div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-6">
+            <div class="card mb-4">
+                <div class="card-header bg-success text-white">
+                    <h3 class="card-title">Recommended Activities</h3>
+                </div>
+                <div class="card-body">
+                    {% if recommended_activities %}
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Activity</th>
+                                        <th>Category</th>
+                                        <th>Priority</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for activity in recommended_activities %}
+                                        <tr>
+                                            <td>{{ activity.activity }}</td>
+                                            <td>{{ activity.category }}</td>
+                                            <td>
+                                                {% if activity.priority == 'high' %}
+                                                    <span class="badge bg-danger">High</span>
+                                                {% else %}
+                                                    <span class="badge bg-info">Medium</span>
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% else %}
+                        <div class="alert alert-warning">No recommended activities available</div>
+                    {% endif %}
+                </div>
+            </div>
+            
+            <div class="card mb-4">
+                <div class="card-header bg-info text-white">
+                    <h3 class="card-title">Body Type Recommendations</h3>
+                </div>
+                <div class="card-body">
+                    {% if body_analysis and body_analysis.success %}
+                        <h5>Focus Areas:</h5>
+                        <ul>
+                            {% for area in body_analysis.body_type_recommendations.focus_areas %}
+                                <li>{{ area }}</li>
+                            {% endfor %}
+                        </ul>
+                        
+                        <h5>Recommended Exercises:</h5>
+                        <ul>
+                            {% for exercise in body_analysis.body_type_recommendations.recommended_exercises %}
+                                <li>{{ exercise }}</li>
+                            {% endfor %}
+                        </ul>
+                        
+                        {% if body_analysis.body_type_recommendations.avoid_exercises %}
+                            <h5>Exercises to Avoid:</h5>
+                            <ul>
+                                {% for exercise in body_analysis.body_type_recommendations.avoid_exercises %}
+                                    <li>{{ exercise }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                    {% else %}
+                        <div class="alert alert-warning">No body type recommendations available</div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card mb-4">
+                <div class="card-header bg-warning text-dark">
+                    <h3 class="card-title">Exercise Plan</h3>
+                </div>
+                <div class="card-body">
+                    {% if exercise_plan %}
+                        <h4>Weekly Plan ({{ exercise_plan.sessions_per_week }} sessions per week)</h4>
+                        
+                        <div class="accordion" id="exerciseAccordion">
+                            {% for workout in exercise_plan.weekly_plan %}
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="heading{{ loop.index }}">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ loop.index }}" aria-expanded="false" aria-controls="collapse{{ loop.index }}">
+                                            {{ workout.day }} - {{ workout.focus|replace('_', ' ')|title }} Focus
+                                        </button>
+                                    </h2>
+                                    <div id="collapse{{ loop.index }}" class="accordion-collapse collapse" aria-labelledby="heading{{ loop.index }}" data-bs-parent="#exerciseAccordion">
+                                        <div class="accordion-body">
+                                            <h5>Cardio ({{ workout.cardio.duration }} minutes)</h5>
+                                            <ul>
+                                                {% for exercise in workout.cardio.exercises %}
+                                                    <li>{{ exercise }}</li>
+                                                {% endfor %}
+                                            </ul>
+                                            
+                                            <h5>Strength Training</h5>
+                                            <p>{{ workout.strength.sets }} sets of {{ workout.strength.reps }} reps, {{ workout.strength.rest }} rest between sets</p>
+                                            <ul>
+                                                {% for exercise in workout.strength.exercises %}
+                                                    <li>{{ exercise }}</li>
+                                                {% endfor %}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        
+                        <div class="mt-4">
+                            <h5>Notes:</h5>
+                            <ul>
+                                {% for note in exercise_plan.notes %}
+                                    <li>{{ note }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% else %}
+                        <div class="alert alert-warning">No exercise plan available</div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-6">
+            <div class="card mb-4">
+                <div class="card-header bg-danger text-white">
+                    <h3 class="card-title">Diet Plan</h3>
+                </div>
+                <div class="card-body">
+                    {% if diet_plan %}
+                        <h4>Daily Nutrition</h4>
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Calories</h5>
+                                        <p class="card-text display-4">{{ diet_plan.daily_calories }}</p>
+                                        <p class="card-text">calories per day</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Macronutrients</h5>
+                                        <ul class="list-group list-group-flush">
+                                            <li class="list-group-item">Protein: <strong>{{ diet_plan.macros.protein }}g</strong></li>
+                                            <li class="list-group-item">Carbs: <strong>{{ diet_plan.macros.carbs }}g</strong></li>
+                                            <li class="list-group-item">Fat: <strong>{{ diet_plan.macros.fat }}g</strong></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <h4>Sample Meal Plan</h4>
+                        <div class="accordion" id="dietAccordion">
+                            {% for meal in diet_plan.meal_plan %}
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="dietHeading{{ loop.index }}">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#dietCollapse{{ loop.index }}" aria-expanded="false" aria-controls="dietCollapse{{ loop.index }}">
+                                            {{ meal.name }}
+                                        </button>
+                                    </h2>
+                                    <div id="dietCollapse{{ loop.index }}" class="accordion-collapse collapse" aria-labelledby="dietHeading{{ loop.index }}" data-bs-parent="#dietAccordion">
+                                        <div class="accordion-body">
+                                            {% if 'options' in meal %}
+                                                <h6>Options:</h6>
+                                                <ul>
+                                                    {% for option in meal.options %}
+                                                        <li>{{ option }}</li>
+                                                    {% endfor %}
+                                                </ul>
+                                            {% else %}
+                                                <ul class="list-group list-group-flush">
+                                                    <li class="list-group-item">Protein: {{ meal.protein }}</li>
+                                                    <li class="list-group-item">Carbs: {{ meal.carbs }}</li>
+                                                    <li class="list-group-item">Vegetables: {{ meal.vegetables }}</li>
+                                                    {% if meal.fats %}
+                                                        <li class="list-group-item">Fats: {{ meal.fats }}</li>
+                                                    {% endif %}
+                                                </ul>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        
+                        <div class="mt-4">
+                            <h5>Nutrition Notes:</h5>
+                            <ul>
+                                {% for note in diet_plan.notes %}
+                                    <li>{{ note }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% else %}
+                        <div class="alert alert-warning">No diet plan available</div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="text-center mt-4 mb-5">
+        <a href="{{ url_for('upload') }}" class="btn btn-primary me-2">Upload Another Image</a>
+        <a href="{{ url_for('profile') }}" class="btn btn-secondary">Update Profile</a>
+    </div>
+</div>
+{% endblock %} 

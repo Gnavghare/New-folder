@@ -1,0 +1,170 @@
+{% extends "base.html" %}
+
+{% block title %}Body Analysis & Fitness Planner{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="jumbotron bg-primary text-white p-5 rounded">
+        <h1 class="display-4">Advanced Body Analysis & Fitness Planner</h1>
+        <p class="lead">Get a personalized fitness and nutrition plan based on your unique body analysis.</p>
+        <hr class="my-4 bg-white">
+        <p>Our AI-powered system analyzes your body type, posture, symmetry, and proportions to create a customized plan that works for you.</p>
+        {% if current_user.is_authenticated %}
+            <a class="btn btn-light btn-lg" href="{{ url_for('dashboard') }}" role="button">Go to Dashboard</a>
+        {% else %}
+            <a class="btn btn-light btn-lg" href="{{ url_for('register') }}" role="button">Create an Account</a>
+            <a class="btn btn-outline-light btn-lg" href="{{ url_for('login') }}" role="button">Login</a>
+        {% endif %}
+    </div>
+    
+    <div class="row mt-5">
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow">
+                <div class="card-body text-center">
+                    <i class="fas fa-camera fa-3x text-primary mb-3"></i>
+                    <h3 class="card-title">Body Analysis</h3>
+                    <p class="card-text">Upload a full-body image and our AI will analyze your body type, posture, symmetry, and proportions.</p>
+                </div>
+                <div class="card-footer bg-light">
+                    <small class="text-muted">Uses advanced computer vision technology</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow">
+                <div class="card-body text-center">
+                    <i class="fas fa-dumbbell fa-3x text-primary mb-3"></i>
+                    <h3 class="card-title">Personalized Workouts</h3>
+                    <p class="card-text">Receive a customized exercise plan based on your body analysis, fitness goals, and available equipment.</p>
+                </div>
+                <div class="card-footer bg-light">
+                    <small class="text-muted">Tailored to your specific body needs</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow">
+                <div class="card-body text-center">
+                    <i class="fas fa-utensils fa-3x text-primary mb-3"></i>
+                    <h3 class="card-title">Nutrition Plan</h3>
+                    <p class="card-text">Get a customized diet plan with calorie targets, macronutrient breakdown, and meal suggestions.</p>
+                </div>
+                <div class="card-footer bg-light">
+                    <small class="text-muted">Based on your body type and goals</small>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row mt-4">
+        <div class="col-md-6 mb-4">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="card-title mb-0">Advanced Body Analysis Features</h3>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <i class="fas fa-check-circle text-success me-2"></i> Body type identification (Inverted Triangle, Pear, Athletic, Rectangle)
+                        </li>
+                        <li class="list-group-item">
+                            <i class="fas fa-check-circle text-success me-2"></i> Posture analysis and correction recommendations
+                        </li>
+                        <li class="list-group-item">
+                            <i class="fas fa-check-circle text-success me-2"></i> Body symmetry assessment and balance exercises
+                        </li>
+                        <li class="list-group-item">
+                            <i class="fas fa-check-circle text-success me-2"></i> Body fat percentage estimation
+                        </li>
+                        <li class="list-group-item">
+                            <i class="fas fa-check-circle text-success me-2"></i> BMI category determination
+                        </li>
+                        <li class="list-group-item">
+                            <i class="fas fa-check-circle text-success me-2"></i> Shoulder-to-hip ratio calculation
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 mb-4">
+            <div class="card shadow">
+                <div class="card-header bg-success text-white">
+                    <h3 class="card-title mb-0">How It Works</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <ol class="list-group list-group-numbered">
+                                <li class="list-group-item d-flex justify-content-between align-items-start">
+                                    <div class="ms-2 me-auto">
+                                        <div class="fw-bold">Create Your Profile</div>
+                                        Enter your basic information, fitness goals, and dietary preferences
+                                    </div>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-start">
+                                    <div class="ms-2 me-auto">
+                                        <div class="fw-bold">Upload a Full-Body Image</div>
+                                        Our AI analyzes your body type, posture, symmetry, and proportions
+                                    </div>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-start">
+                                    <div class="ms-2 me-auto">
+                                        <div class="fw-bold">Get Your Analysis</div>
+                                        Review detailed insights about your body measurements and characteristics
+                                    </div>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-start">
+                                    <div class="ms-2 me-auto">
+                                        <div class="fw-bold">Receive Your Personalized Plan</div>
+                                        Get a customized workout and nutrition plan based on your analysis
+                                    </div>
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="card shadow mt-4 mb-5">
+        <div class="card-header bg-info text-white">
+            <h3 class="card-title mb-0">User Account Benefits</h3>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <h4><i class="fas fa-history me-2"></i>Save Your Analysis History</h4>
+                    <p>Create an account to save all your body analyses and track your progress over time. Compare results to see how your body is changing.</p>
+                </div>
+                <div class="col-md-6">
+                    <h4><i class="fas fa-user-shield me-2"></i>Secure & Private</h4>
+                    <p>Your data is stored securely and never shared with third parties. We respect your privacy and give you full control over your information.</p>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-6">
+                    <h4><i class="fas fa-sync me-2"></i>Update Your Profile Anytime</h4>
+                    <p>As your fitness goals change, easily update your profile to get new recommendations tailored to your current needs.</p>
+                </div>
+                <div class="col-md-6">
+                    <h4><i class="fas fa-mobile-alt me-2"></i>Access Anywhere</h4>
+                    <p>Log in from any device to access your fitness plans, body analyses, and personalized recommendations.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="text-center mt-4 mb-5">
+        {% if current_user.is_authenticated %}
+            <a href="{{ url_for('upload') }}" class="btn btn-primary btn-lg px-5">
+                <i class="fas fa-camera me-2"></i>Start New Analysis
+            </a>
+        {% else %}
+            <a href="{{ url_for('register') }}" class="btn btn-primary btn-lg px-5">
+                <i class="fas fa-user-plus me-2"></i>Create Your Account
+            </a>
+        {% endif %}
+    </div>
+</div>
+{% endblock %} 
